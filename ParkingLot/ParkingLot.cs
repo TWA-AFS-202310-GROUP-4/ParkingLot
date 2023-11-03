@@ -19,6 +19,11 @@
             return ticketCarDict.Count == capacity;
         }
 
+        public int GetCapacityLeft()
+        {
+            return capacity - ticketCarDict.Count;
+        }
+
         public string Fetch(string ticket)
         {
             if (ticket == null || !ticketCarDict.ContainsKey(ticket))

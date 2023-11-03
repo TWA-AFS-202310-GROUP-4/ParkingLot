@@ -4,7 +4,7 @@ namespace ParkingLotTest
     using System;
     using Xunit;
 
-    public class StandParkingBoyTest
+    public class SmartParkingBoyTest
     {
         [Fact]
         public void Should_park_in_first_lot_when_parking_given_two_parkingLot()
@@ -12,7 +12,7 @@ namespace ParkingLotTest
             // given
             var p1 = new ParkingLot();
             var p2 = new ParkingLot();
-            var parkingBoy = new StandParkingBoy(p1, p2);
+            var parkingBoy = new SmartParkingBoy(p1, p2);
             var car = "1";
 
             // when
@@ -29,7 +29,7 @@ namespace ParkingLotTest
             // given
             var p1 = new ParkingLot(0);
             var p2 = new ParkingLot();
-            var parkingBoy = new StandParkingBoy(p1, p2);
+            var parkingBoy = new SmartParkingBoy(p1, p2);
             var car = "1";
 
             // when
@@ -46,7 +46,7 @@ namespace ParkingLotTest
             // given
             var p1 = new ParkingLot();
             var p2 = new ParkingLot();
-            var parkingBoy = new StandParkingBoy(p1, p2);
+            var parkingBoy = new SmartParkingBoy(p1, p2);
             var car1 = "1";
             var car2 = "2";
 
@@ -67,7 +67,7 @@ namespace ParkingLotTest
             // given
             var p1 = new ParkingLot();
             var p2 = new ParkingLot();
-            var parkingBoy = new StandParkingBoy(p1, p2);
+            var parkingBoy = new SmartParkingBoy(p1, p2);
             var car = "1";
 
             // when
@@ -82,7 +82,7 @@ namespace ParkingLotTest
             // given
             var p1 = new ParkingLot();
             var p2 = new ParkingLot();
-            var parkingBoy = new StandParkingBoy(p1, p2);
+            var parkingBoy = new SmartParkingBoy(p1, p2);
             var car = "1";
 
             // when
@@ -98,7 +98,7 @@ namespace ParkingLotTest
             // given
             var p1 = new ParkingLot(0);
             var p2 = new ParkingLot(0);
-            var parkingBoy = new StandParkingBoy(p1, p2);
+            var parkingBoy = new SmartParkingBoy(p1, p2);
             var car = "1";
 
             Assert.Throws<NoPositionException>(() => parkingBoy.Park(car));
