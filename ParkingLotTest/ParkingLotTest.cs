@@ -46,5 +46,21 @@ namespace ParkingLotTest
             Assert.Equal(car, carActual);
             Assert.Equal(car2, carActual2);
         }
+
+        [Fact]
+        public void Should_return_null_when_fetch_given_wrong_ticket_many_customer()
+        {
+            var parkingLot = new ParkingLot();
+            var car = "1";
+            var car2 = "2";
+            var ticket = parkingLot.Park(car);
+            var t2 = parkingLot.Park(car2);
+
+            var carActual = parkingLot.Fetch(ticket + " ");
+            var carActual2 = parkingLot.Fetch(t2 + " ");
+
+            Assert.Equal(null, carActual);
+            Assert.Equal(null, carActual2);
+        }
     }
 }

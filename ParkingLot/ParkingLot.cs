@@ -9,7 +9,8 @@
 
         public string Fetch(string ticket)
         {
-            var car = this.ticketCarDict[ticket];
+            string car;
+            this.ticketCarDict.TryGetValue(ticket, out car);
             this.ticketCarDict.Remove(ticket);
 
             return car;
