@@ -60,5 +60,49 @@ namespace ParkingLotTest
             Assert.Equal(car1, car1Actual);
             Assert.Equal(car2, car2Actual);
         }
+
+        [Fact]
+        public void Should_error_when_fetch_given_wrong_ticket()
+        {
+            // given
+            var p1 = new ParkingLot();
+            var p2 = new ParkingLot();
+            var parkingBoy = new StandParkingBoy(p1, p2);
+            var car = "1";
+
+            // when
+            string ticket = parkingBoy.Park(car);
+
+            Assert.Throws<WrongTicketException>(() => parkingBoy.Fetch(ticket + " "));
+        }
+
+        [Fact]
+        public void Should_error_when_fetch_given_used_ticket()
+        {
+            // given
+            var p1 = new ParkingLot();
+            var p2 = new ParkingLot();
+            var parkingBoy = new StandParkingBoy(p1, p2);
+            var car = "1";
+
+            // when
+            string ticket = parkingBoy.Park(car);
+            parkingBoy.Fetch(ticket);
+
+            Assert.Throws<WrongTicketException>(() => p2.Fetch(ticket));
+        }
+
+
+        [Fact]
+        public void Should_error_when_park_given_no_capacity()
+        {
+            // given
+            var p1 = new ParkingLot(0);
+            var p2 = new ParkingLot(0);
+            var parkingBoy = new StandParkingBoy(p1, p2);
+            var car = "1";
+
+            Assert.Throws<NoPositionException>(() => parkingBoy.Park(car));
+        }
     }
 }
