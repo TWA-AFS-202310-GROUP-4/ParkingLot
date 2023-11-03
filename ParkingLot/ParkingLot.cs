@@ -21,6 +21,11 @@
 
         public string Fetch(string ticket)
         {
+            if (ticket == null)
+            {
+                return null;
+            }
+
             string car;
             this.ticketCarDict.TryGetValue(ticket, out car);
             this.ticketCarDict.Remove(ticket);

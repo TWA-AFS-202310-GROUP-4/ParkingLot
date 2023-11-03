@@ -109,5 +109,17 @@ namespace ParkingLotTest
 
             Assert.Null(ticket);
         }
+
+        [Fact]
+        public void Should_return_null_when_fetch_given_null()
+        {
+            var parkingLot = new ParkingLot(1);
+            var ticket = parkingLot.Park("car");
+
+            var car = parkingLot.Fetch(null);
+
+            Assert.Null(car);
+        }
+ 
     }
 }
