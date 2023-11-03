@@ -24,6 +24,11 @@ public class ParkingLot
 
     public string Fetch(string inputTicket)
     {
+        if (inputTicket == null)
+        {
+            return "No car fetched";
+        }
+
         if (parkingSpace.ContainsKey(inputTicket))
         {
             var carPlate = parkingSpace.GetValueOrDefault(inputTicket);
