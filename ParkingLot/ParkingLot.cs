@@ -8,20 +8,26 @@ namespace Parking;
 
 public class ParkingLot
 {
-    private string carPlate;
-    private string ticket;
+    private Dictionary<string, string> parkingSpace = new Dictionary<string, string>();
 
-    public string Park(string carPlate)
+    public string Park(string inputCarPlate)
     {
-        this.carPlate = carPlate;
-        ticket = "T-" + carPlate;
+        if (parkingSpace.ContainsKey(inputCarPlate))
+        {
+            return "duplicate car";
+        }
+
+        var ticket = "T-" + inputCarPlate;
+        parkingSpace.Add(ticket, inputCarPlate);
         return ticket;
     }
 
     public string Fetch(string inputTicket)
     {
-        if (inputTicket.Equals(ticket))
+        if (parkingSpace.ContainsKey(inputTicket))
         {
+            var carPlate = parkingSpace.GetValueOrDefault(inputTicket);
+            parkingSpace.Remove(inputTicket);
             return carPlate;
         }
         else
