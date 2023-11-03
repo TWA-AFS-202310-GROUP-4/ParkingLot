@@ -1,6 +1,7 @@
 namespace ParkingLotTest
 {
     using ParkingLot;
+    using System;
     using Xunit;
 
     public class ParkingLotTest
@@ -48,7 +49,7 @@ namespace ParkingLotTest
         }
 
         [Fact]
-        public void Should_return_null_when_fetch_given_wrong_ticket_many_customer()
+        public void Should_error_when_fetch_given_wrong_ticket_many_customer()
         {
             var parkingLot = new ParkingLot();
             var car = "1";
@@ -56,11 +57,8 @@ namespace ParkingLotTest
             var ticket = parkingLot.Park(car);
             var t2 = parkingLot.Park(car2);
 
-            var carActual = parkingLot.Fetch(ticket + " ");
-            var carActual2 = parkingLot.Fetch(t2 + " ");
-
-            Assert.Null(carActual);
-            Assert.Null(carActual2);
+            Assert.Throws<WrongTicketException>(() => parkingLot.Fetch(ticket + " "));
+            Assert.Throws<WrongTicketException>(() => parkingLot.Fetch(t2 + " "));
         }
 
         [Fact]
@@ -70,10 +68,7 @@ namespace ParkingLotTest
             var car = "1";
             var ticket = parkingLot.Park(car);
 
-            parkingLot.Fetch(ticket);
-            var carActual = parkingLot.Fetch(ticket);
-
-            Assert.Null(carActual);
+            Assert.Throws<WrongTicketException>(() => parkingLot.Fetch(ticket + " "));
         }
 
         [Fact]
@@ -83,15 +78,13 @@ namespace ParkingLotTest
             var car = "1";
             var ticket = parkingLot.Park(car);
 
-            var ticket2 = parkingLot.Park(car);
-
-            Assert.Null(ticket2);
+            Assert.Throws<NoPositionException>(() => parkingLot.Park("2"));
         }
 
         [Fact]
         public void Should_return_null_when_park_given_parked_car()
         {
-            var parkingLot = new ParkingLot(1);
+            var parkingLot = new ParkingLot();
             var car = "1";
             parkingLot.Park(car);
 
@@ -111,15 +104,12 @@ namespace ParkingLotTest
         }
 
         [Fact]
-        public void Should_return_null_when_fetch_given_null()
+        public void Should_error_msg_when_fetch_given_null()
         {
             var parkingLot = new ParkingLot(1);
             var ticket = parkingLot.Park("car");
 
-            var car = parkingLot.Fetch(null);
-
-            Assert.Null(car);
+            Assert.Throws<WrongTicketException>(() => parkingLot.Fetch(null));
         }
- 
     }
 }

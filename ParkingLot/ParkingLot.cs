@@ -21,13 +21,12 @@
 
         public string Fetch(string ticket)
         {
-            if (ticket == null)
+            if (ticket == null || !ticketCarDict.ContainsKey(ticket))
             {
-                return null;
+                throw new WrongTicketException("Unrecognized parking ticket.");
             }
 
-            string car;
-            this.ticketCarDict.TryGetValue(ticket, out car);
+            this.ticketCarDict.TryGetValue(ticket, out string car);
             this.ticketCarDict.Remove(ticket);
 
             return car;
@@ -37,7 +36,7 @@
         {
             if (IsFull())
             {
-                return null;
+                throw new NoPositionException("No available position");
             }
 
             if (car == null)
@@ -53,6 +52,20 @@
             var ticket = Guid.NewGuid().ToString();
             this.ticketCarDict[ticket] = car;
             return ticket;
+        }
+    }
+
+    public class NoPositionException : Exception
+    {
+        public NoPositionException(string message) : base(message)
+        {
+        }
+    }
+
+    public class WrongTicketException : Exception
+    {
+        public WrongTicketException(string message) : base(message)
+        {
         }
     }
 }
