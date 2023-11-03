@@ -1,18 +1,21 @@
 ﻿namespace ParkingLot
 {
     using System;
+    using System.Collections.Generic;
+
     public class ParkingLot
     {
-        private string car;
+        private Dictionary<string, string> ticket2car = new Dictionary<string, string>();   
         public string Fetch(string ticket)
         {
-            return car;
+            return ticket2car[ticket];
         }
 
         public string Park(string car)
         {
-            this.car = car;
-            return "T-" + car;
+            string ticket = "T-" + car;
+            ticket2car[ticket] = car;
+            return ticket;
         }
     }
 }
