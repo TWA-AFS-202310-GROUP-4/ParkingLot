@@ -62,5 +62,18 @@ namespace ParkingLotTest
             Assert.Equal(null, carActual);
             Assert.Equal(null, carActual2);
         }
+
+        [Fact]
+        public void Should_return_null_when_fetch_given_not_exist_ticket()
+        {
+            var parkingLot = new ParkingLot();
+            var car = "1";
+            var ticket = parkingLot.Park(car);
+
+            parkingLot.Fetch(ticket);
+            var carActual = parkingLot.Fetch(ticket);
+
+            Assert.Equal(null, carActual);
+        }
     }
 }
