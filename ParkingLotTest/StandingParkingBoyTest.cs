@@ -39,5 +39,26 @@ namespace ParkingLotTest
             // then
             Assert.Equal(car, carActual);
         }
+
+        [Fact]
+        public void Should_fetch_right_when_fetch_twice_given_two_lots_each_have_a_car()
+        {
+            // given
+            var p1 = new ParkingLot();
+            var p2 = new ParkingLot();
+            var parkingBoy = new StandParkingBoy(p1, p2);
+            var car1 = "1";
+            var car2 = "2";
+
+            // when
+            var t1 = p1.Park(car1);
+            var t2 = p2.Park(car2);
+            var car1Actual = parkingBoy.Fetch(t1);
+            var car2Actual = parkingBoy.Fetch(t2);
+
+            // then
+            Assert.Equal(car1, car1Actual);
+            Assert.Equal(car2, car2Actual);
+        }
     }
 }
