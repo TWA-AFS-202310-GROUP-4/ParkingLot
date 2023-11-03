@@ -9,7 +9,7 @@ namespace ParkingLotTest
         public void Should_return_ticket_when_parking_given_car()
         {
             // given
-            var parkingLot = new ParkingLot();
+            var parkingLot = new ParkingLot(10);
             var car = "1";
 
             // when
@@ -22,7 +22,7 @@ namespace ParkingLotTest
         [Fact]
         public void Should_return_car_when_fetch_given_ticket()
         {
-            var parkingLot = new ParkingLot();
+            var parkingLot = new ParkingLot(10);
             var car = "1";
             var ticket = parkingLot.Park(car);
 
@@ -59,8 +59,8 @@ namespace ParkingLotTest
             var carActual = parkingLot.Fetch(ticket + " ");
             var carActual2 = parkingLot.Fetch(t2 + " ");
 
-            Assert.Equal(null, carActual);
-            Assert.Equal(null, carActual2);
+            Assert.Null(carActual);
+            Assert.Null(carActual2);
         }
 
         [Fact]
@@ -73,7 +73,31 @@ namespace ParkingLotTest
             parkingLot.Fetch(ticket);
             var carActual = parkingLot.Fetch(ticket);
 
-            Assert.Equal(null, carActual);
+            Assert.Null(carActual);
+        }
+
+        [Fact]
+        public void Should_return_null_when_park_given_no_capacity()
+        {
+            var parkingLot = new ParkingLot(1);
+            var car = "1";
+            var ticket = parkingLot.Park(car);
+
+            var ticket2 = parkingLot.Park(car);
+
+            Assert.Null(ticket2);
+        }
+
+        [Fact]
+        public void Should_return_null_when_park_given_parked_car()
+        {
+            var parkingLot = new ParkingLot(1);
+            var car = "1";
+            parkingLot.Park(car);
+
+            var ticket2 = parkingLot.Park(car);
+
+            Assert.Null(ticket2);
         }
     }
 }
