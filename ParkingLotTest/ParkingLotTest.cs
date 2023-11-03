@@ -24,5 +24,21 @@ namespace ParkingLotTest
             //then
             Assert.Equal("car", car);
         }
+
+        [Theory]
+        [InlineData("car1")]
+        [InlineData("car2")]
+        public void Should_fetch_corresponding_car_when_fetchCar_with_ticket(string car)
+        {
+            //given
+            var park = new Parking();
+            string ticket = park.Park(car);
+
+            //when
+            string fetchedCar = park.FectchCar(ticket);
+
+            //then
+            Assert.Equal(car, fetchedCar);
+        }
     }
 }

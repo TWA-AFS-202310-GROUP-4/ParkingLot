@@ -8,14 +8,22 @@ namespace ParkingLot.Parking
 {
     public class Parking
     {
-        public string FectchCar(string ticket)
+        private Dictionary<string, string> parkingRecord;
+        public Parking()
         {
-            return "car";
+            parkingRecord = new Dictionary<string, string>();
         }
 
         public string Park(string car)
         {
-            return "ticket";
+            var ticket = car + "-ticket";
+            parkingRecord.Add(ticket, car);
+            return ticket;
+        }
+
+        public string FectchCar(string ticket)
+        {
+            return parkingRecord[ticket];
         }
     }
 }
