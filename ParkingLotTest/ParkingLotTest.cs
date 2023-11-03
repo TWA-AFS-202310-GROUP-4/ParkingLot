@@ -36,5 +36,16 @@ namespace ParkingLotTest
 
             Assert.Equal("wrong ticket", car1);
         }
+
+        [Fact]
+        public void Should_return_ticket_wrong_given_used_tickets()
+        {
+            var parkinglot = new ParkingLot();
+            string ticket1 = parkinglot.Park("car1");
+            string car1 = parkinglot.Fetch(ticket1);
+            string car1again = parkinglot.Fetch(ticket1);
+
+            Assert.Equal("wrong ticket", car1again);
+        }
     }
 }

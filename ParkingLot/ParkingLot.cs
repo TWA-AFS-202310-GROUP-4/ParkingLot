@@ -8,7 +8,9 @@
         private Dictionary<string, string> ticket2car = new Dictionary<string, string>();
         public string Fetch(string ticket)
         {
-            return ticket2car.ContainsKey(ticket) ? ticket2car[ticket] : "wrong ticket";
+            string carmessage = ticket2car.ContainsKey(ticket) ? ticket2car[ticket] : "wrong ticket";
+            ticket2car.Remove(ticket);
+            return carmessage;
         }
 
         public string Park(string car)
