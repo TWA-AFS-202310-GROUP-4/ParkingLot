@@ -35,6 +35,11 @@
                 return null;
             }
 
+            if (car == null)
+            {
+                return null;
+            }
+
             if (ticketCarDict.Where(item => item.Value == car).Any())
             {
                 return null;

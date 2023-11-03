@@ -99,5 +99,15 @@ namespace ParkingLotTest
 
             Assert.Null(ticket2);
         }
+
+        [Fact]
+        public void Should_return_null_when_park_given_null()
+        {
+            var parkingLot = new ParkingLot(1);
+
+            var ticket = parkingLot.Park(null);
+
+            Assert.Null(ticket);
+        }
     }
 }
