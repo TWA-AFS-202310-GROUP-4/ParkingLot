@@ -14,7 +14,7 @@
             this.capacity = capacity;
         }
 
-        public bool IsFull()
+        private bool IsFull()
         {
             return ticketCarDict.Count == capacity;
         }
@@ -34,17 +34,7 @@
 
         public string Park(string car)
         {
-            if (IsFull())
-            {
-                throw new NoPositionException("No available position");
-            }
-
-            if (car == null)
-            {
-                return null;
-            }
-
-            if (ticketCarDict.Where(item => item.Value == car).Any())
+            if (!ValidatePark(car))
             {
                 return null;
             }
@@ -52,6 +42,26 @@
             var ticket = Guid.NewGuid().ToString();
             this.ticketCarDict[ticket] = car;
             return ticket;
+        }
+
+        public bool ValidatePark(string car)
+        {
+            if (IsFull())
+            {
+                throw new NoPositionException("No available position");
+            }
+
+            if (car == null)
+            {
+                return false;
+            }
+
+            if (ticketCarDict.Where(item => item.Value == car).Any())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 
