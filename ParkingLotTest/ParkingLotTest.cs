@@ -25,7 +25,16 @@ namespace ParkingLotTest
 
             Assert.Equal("car1", car1);
             Assert.Equal("car2", car2);
+        }
 
+        [Fact]
+        public void Should_return_no_car_given_wrong_tickets()
+        {
+            var parkinglot = new ParkingLot();
+            string ticket1 = parkinglot.Park("car1");
+            string car1 = parkinglot.Fetch(ticket1 + "2");
+
+            Assert.Equal("wrong ticket", car1);
         }
     }
 }

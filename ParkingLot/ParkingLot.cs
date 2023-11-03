@@ -5,10 +5,10 @@
 
     public class ParkingLot
     {
-        private Dictionary<string, string> ticket2car = new Dictionary<string, string>();   
+        private Dictionary<string, string> ticket2car = new Dictionary<string, string>();
         public string Fetch(string ticket)
         {
-            return ticket2car[ticket];
+            return ticket2car.ContainsKey(ticket) ? ticket2car[ticket] : "wrong ticket";
         }
 
         public string Park(string car)
