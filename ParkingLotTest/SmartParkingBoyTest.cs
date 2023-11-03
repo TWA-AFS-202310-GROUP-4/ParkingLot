@@ -7,6 +7,25 @@ namespace ParkingLotTest
     public class SmartParkingBoyTest
     {
         [Fact]
+        public void Should_park_in_more_empty_lot_when_parking_given_two_parkingLot()
+        {
+            // given
+            var p1 = new ParkingLot();
+            var p2 = new ParkingLot();
+            var parkingBoy = new SmartParkingBoy(p1, p2);
+            var car = "1";
+            var car2 = "2";
+            p1.Park(car);
+
+            // when
+            string ticket = parkingBoy.Park(car2);
+            var carActual = p2.Fetch(ticket);
+
+            // then
+            Assert.Equal(car2, carActual);
+        }
+
+        [Fact]
         public void Should_park_in_first_lot_when_parking_given_two_parkingLot()
         {
             // given
