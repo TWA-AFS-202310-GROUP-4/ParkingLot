@@ -40,5 +40,21 @@ namespace ParkingLotTest
             //then
             Assert.Equal(car, fetchedCar);
         }
+
+        [Theory]
+        [InlineData("truck-ticket")]
+        [InlineData("truck2-ticket")]
+        [InlineData("null")]
+        public void Should_get_null_when_fetchCar_with_a_wrong_ticket(string faketicket)
+        {
+            //given
+            var park = new Parking();
+
+            //when
+            string fetchedCar = park.FectchCar(faketicket);
+
+            //then
+            Assert.Null(fetchedCar);
+        }
     }
 }

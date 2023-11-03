@@ -23,6 +23,11 @@ namespace ParkingLot.Parking
 
         public string FectchCar(string ticket)
         {
+            if (ticket == null || !parkingRecord.ContainsKey(ticket))
+            {
+                return null;
+            }
+
             return parkingRecord[ticket];
         }
     }
