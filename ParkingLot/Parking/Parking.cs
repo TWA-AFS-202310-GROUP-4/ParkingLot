@@ -28,7 +28,9 @@ namespace ParkingLot.Parking
                 return null;
             }
 
-            return parkingRecord[ticket];
+            var res = parkingRecord[ticket];
+            parkingRecord.Remove(ticket);
+            return res;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace ParkingLotTest
         [Theory]
         [InlineData("truck-ticket")]
         [InlineData("truck2-ticket")]
-        [InlineData("null")]
+        [InlineData(null)]
         public void Should_get_null_when_fetchCar_with_a_wrong_ticket(string faketicket)
         {
             //given
@@ -55,6 +55,24 @@ namespace ParkingLotTest
 
             //then
             Assert.Null(fetchedCar);
+        }
+
+        [Theory]
+        [InlineData("car1")]
+        [InlineData("car2")]
+        [InlineData("car3")]
+        public void Should_get_null_when_fetchCar_with_a_used_ticket(string car)
+        {
+            //given
+            var park = new Parking();
+            var ticktet = park.Park(car);
+
+            //when
+            park.FectchCar(ticktet);
+            string retryRes = park.FectchCar(ticktet);
+
+            //then
+            Assert.Null(retryRes);
         }
     }
 }
