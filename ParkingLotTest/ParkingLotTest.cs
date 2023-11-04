@@ -69,5 +69,23 @@ namespace ParkingLotTest
             //Then
             Assert.Equal(string.Empty, fetchedCar);
         }
+
+        [Fact]
+        public void Should_return_nothing_when_park_given_without_position()
+        {
+            //Given
+            var parkingLot = new ParkingLot();
+            int parkCarNum = 10;
+            for (int i = 0; i < parkCarNum; i++)
+            {
+                string car = $"car{i}";
+                parkingLot.Park(car);
+            }
+
+            //When
+            string ticket = parkingLot.Park("car11");
+            //Then
+            Assert.Equal(string.Empty, ticket);
+        }
     }
 }

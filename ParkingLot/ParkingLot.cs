@@ -8,15 +8,17 @@ namespace Parking
 {
     public class ParkingLot
     {
-        private readonly Dictionary<string, string> parkedCarsInfo = new ();
+        private readonly int maxCapacity = 10;
+        private Dictionary<string, string> ticketCarMap = new ();
+        private int currentCapacity = 0;
 
         public string Fetch(string ticket)
         {
             string value;
-            string fetchedCar = parkedCarsInfo.TryGetValue(ticket, out value) ? value : string.Empty;
+            string fetchedCar = ticketCarMap.TryGetValue(ticket, out value) ? value : string.Empty;
             if (value != string.Empty)
             {
-                parkedCarsInfo.Remove(ticket);
+                ticketCarMap.Remove(ticket);
             }
 
             return fetchedCar;
@@ -24,8 +26,14 @@ namespace Parking
 
         public string Park(string carPlate)
         {
+            if (currentCapacity >= maxCapacity)
+            {
+                return string.Empty;
+            }
+
+            currentCapacity++;
             string ticket = "ticket: " + carPlate;
-            parkedCarsInfo.Add(ticket, carPlate);
+            ticketCarMap.Add(ticket, carPlate);
             return ticket;
         }
     }
