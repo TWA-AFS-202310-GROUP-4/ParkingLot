@@ -1,4 +1,6 @@
 ﻿using ParkingLot.Parking;
+using System.ComponentModel.DataAnnotations;
+using System.Net.Sockets;
 using Xunit;
 
 namespace ParkingLotTest
@@ -36,8 +38,6 @@ namespace ParkingLotTest
         }
 
         [Theory]
-        [InlineData("truck-ticket")]
-        [InlineData("truck2-ticket")]
         [InlineData(null)]
         public void Should_get_null_when_fetchCar_with_a_wrong_ticket(string faketicket)
         {
@@ -52,21 +52,35 @@ namespace ParkingLotTest
         }
 
         [Theory]
-        [InlineData("car1")]
-        [InlineData("car2")]
-        [InlineData("car3")]
-        public void Should_get_null_when_fetchCar_with_a_used_ticket(string car)
+        [InlineData("car1", "Unrecognized parking ticket.")]
+        [InlineData("car2", "Unrecognized parking ticket.")]
+        [InlineData("car3", "Unrecognized parking ticket.")]
+        public void Should_get_error_message_when_fetchCar_with_a_used_ticket(string car, string errorMessage)
         {
             //given
             var park = new Parking();
             var ticktet = park.Park(car);
-
-            //when
             park.FectchCar(ticktet);
-            string retryRes = park.FectchCar(ticktet);
+            //when
+            WrongTicketException wrongTicketException = Assert.Throws<WrongTicketException>(() => park.FectchCar(ticktet));
 
             //then
-            Assert.Null(retryRes);
+            Assert.Equal(errorMessage, wrongTicketException.Message);
+        }
+
+        [Theory]
+        [InlineData("truck", "Unrecognized parking ticket.")]
+        [InlineData("notticket", "Unrecognized parking ticket.")]
+        [InlineData("abccar", "Unrecognized parking ticket.")]
+        public void Should_get_error_message_when_fetchCar_with_a_wrong_ticket(string wrongTicket, string errorMessage)
+        {
+            //given
+            var park = new Parking();
+            //when
+            WrongTicketException wrongTicketException = Assert.Throws<WrongTicketException>(() => park.FectchCar(wrongTicket));
+
+            //then
+            Assert.Equal(errorMessage, wrongTicketException.Message);
         }
 
         [Theory]

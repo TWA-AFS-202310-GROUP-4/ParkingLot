@@ -27,9 +27,14 @@ namespace ParkingLot.Parking
 
         public string FectchCar(string ticket)
         {
-            if (ticket == null || !parkingRecord.ContainsKey(ticket))
+            if (ticket == null)
             {
                 return null;
+            }
+
+            if (!parkingRecord.ContainsKey(ticket))
+            {
+                throw new WrongTicketException("Unrecognized parking ticket.");
             }
 
             var res = parkingRecord[ticket];
