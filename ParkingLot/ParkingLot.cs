@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Parking;
-
 public class ParkingLot
 {
     private Dictionary<string, string> parkingSpace = new Dictionary<string, string>();

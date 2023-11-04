@@ -46,4 +46,15 @@ public class ParkingLotTest
 
         Assert.Null(myCar);
     }
+
+    [Fact]
+    public void Should_return_null_when_fetch_the_car_given_a_used_ticket()
+    {
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.Park("car1");
+        parkingLot.Fetch("T-car1");
+
+        var myCar = parkingLot.Fetch("T-car1");
+        Assert.Null(myCar);
+    }
 }
