@@ -2,6 +2,7 @@ namespace ParkingLotTest;
 
 using Parking;
 using Xunit;
+using Xunit.Sdk;
 
 public class ParkingLotTest
 {
@@ -56,5 +57,20 @@ public class ParkingLotTest
 
         var myCar = parkingLot.Fetch("T-car1");
         Assert.Null(myCar);
+    }
+
+    [Fact]
+    public void Should_return_null_when_parking_lot_is_full_given_a_car()
+    {
+        ParkingLot parkingLot = new ParkingLot();
+
+        for (int i = 1; i <= 10; i++)
+        {
+            string carPlate = "car" + i.ToString();
+            parkingLot.Park(carPlate);
+        }
+
+        var ticket = parkingLot.Park("car11");
+        Assert.Null(ticket);
     }
 }

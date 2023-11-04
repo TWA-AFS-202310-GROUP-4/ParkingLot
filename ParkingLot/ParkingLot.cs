@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 namespace Parking;
 public class ParkingLot
 {
-    private Dictionary<string, string> parkingSpace = new Dictionary<string, string>();
+    private Dictionary<string, string> parkingSpace = new Dictionary<string, string>(); //ticket : car
+    private int capacity = 10;
 
     public string Park(string inputCarPlate)
     {
+        if (capacity <= 0)
+        {
+            return null;
+        }
+
         var ticket = "T-" + inputCarPlate;
         parkingSpace.Add(ticket, inputCarPlate);
+        capacity--;
         return ticket;
     }
 
@@ -27,6 +34,7 @@ public class ParkingLot
         {
             var carPlate = parkingSpace.GetValueOrDefault(inputTicket);
             parkingSpace.Remove(inputTicket);
+            capacity++;
             return carPlate;
         }
 
