@@ -6,7 +6,7 @@ using Xunit;
 public class ParkingLotTest
 {
     [Fact]
-    public void Should_return_a_parking_ticket_when_park_a_car()
+    public void Should_return_a_parking_ticket_when_park_a_car_given_a_car()
     {
         ParkingLot parkingLot = new ParkingLot();
         var ticket = parkingLot.Park("car1");
@@ -15,7 +15,7 @@ public class ParkingLotTest
     }
 
     [Fact]
-    public void Should_fetch_car_correctly_when_one_customer_parking()
+    public void Should_rerturn_car_correctly_when_fetch_the_car_given_a_parking_ticket()
     {
         ParkingLot parkingLot = new ParkingLot();
         var ticket = parkingLot.Park("car1");
@@ -25,7 +25,7 @@ public class ParkingLotTest
     }
 
     [Fact]
-    public void Should_fetch_cars_correctly_when_serveal_customers_parking()
+    public void Should_return_cars_correctly_when_fetch_cars_given_parking_tickets()
     {
         ParkingLot parkingLot = new ParkingLot();
         var ticket1 = parkingLot.Park("car1");
