@@ -9,6 +9,8 @@
     {
         private Dictionary<string, string> ticket2car = new Dictionary<string, string>();
         private int capacity = 10;
+        public int Capacity { get; set; }
+
         public string Fetch(string ticket)
         {
             string carmessage;
