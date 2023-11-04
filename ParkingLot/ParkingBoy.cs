@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParkingLot.Exception;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,28 +8,30 @@ namespace ParkingLotWork.ParkingBoy
 {
     public class ParkingBoy
     {
-        private List<ParkingLot> parkinglot = new List<ParkingLot>();
+        private List<ParkingLot> parkinglots;
         public ParkingBoy(List<ParkingLot> parkingLot)
         {
-            this.parkinglot = parkingLot;
+            this.parkinglots = parkingLot;
         }
 
         public ParkingBoy(ParkingLot parkingLot)
         {
-            parkinglot.Add(parkingLot);
+            parkinglots = new List<ParkingLot>();
+            parkinglots.Add(parkingLot);
         }
 
         public string Park(string car)
         {
-            parkinglot.OrderBy(pa => pa.Capacity);
+            parkinglots = parkinglots.OrderByDescending(pa => pa.Capacity).ToList();
             Exception exception = null;
-            foreach (var lot in parkinglot)
+            foreach (var lot in parkinglots)
             {
+                Console.WriteLine(lot.Capacity);
                 try
                 {
-                    if (lot.Capacity < 10)
+                    if (lot.Capacity > 0)
                     {
-                        string ticket = parkinglot[0].Park(car);
+                        string ticket = lot.Park(car);
                         return ticket;
                     }
                 }
@@ -49,7 +52,7 @@ namespace ParkingLotWork.ParkingBoy
         public string Fetch(string ticket)
         {
             Exception exception = null;
-            foreach (var lot in parkinglot)
+            foreach (var lot in parkinglots)
            {
                 try
                 {
@@ -67,7 +70,7 @@ namespace ParkingLotWork.ParkingBoy
                 throw exception;
             }
 
-            return null;
+            return string.Empty;
         }
     }
 }

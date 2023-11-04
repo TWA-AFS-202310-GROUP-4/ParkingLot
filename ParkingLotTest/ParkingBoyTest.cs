@@ -22,8 +22,8 @@ namespace ParkingLotTest
         {
             ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
             string ticket1 = parkingBoy.Park("car1");
-            string car1 = parkingBoy.Fetch(ticket1);
             string ticket2 = parkingBoy.Park("car2");
+            string car1 = parkingBoy.Fetch(ticket1);
             string car2 = parkingBoy.Fetch(ticket2);
             Assert.Equal("car1", car1);
             Assert.Equal("car2", car2);
