@@ -8,7 +8,7 @@ public class ParkingLotTest
     [Fact]
     public void Should_return_a_parking_ticket_when_park_a_car_given_a_car()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
+        ParkingLot parkingLot = new ParkingLot();
         var ticket = parkingLot.Park("car1");
 
         Assert.Equal("T-car1", ticket);
@@ -17,7 +17,7 @@ public class ParkingLotTest
     [Fact]
     public void Should_rerturn_car_correctly_when_fetch_the_car_given_a_parking_ticket()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
+        ParkingLot parkingLot = new ParkingLot();
         var ticket = parkingLot.Park("car1");
         var myCar = parkingLot.Fetch(ticket);
 
@@ -27,7 +27,7 @@ public class ParkingLotTest
     [Fact]
     public void Should_return_cars_correctly_when_fetch_cars_given_parking_tickets()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
+        ParkingLot parkingLot = new ParkingLot();
         var ticket1 = parkingLot.Park("car1");
         var ticket2 = parkingLot.Park("car2");
         var car1 = parkingLot.Fetch(ticket1);
@@ -40,7 +40,7 @@ public class ParkingLotTest
     [Fact]
     public void Should_return_null_when_fetch_the_car_given_a_wrong_ticket()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
+        ParkingLot parkingLot = new ParkingLot();
         parkingLot.Park("car1");
         Assert.Throws<UnrecognizedParkingTicketException>(() => parkingLot.Fetch("T-car2"));
     }
@@ -48,7 +48,7 @@ public class ParkingLotTest
     [Fact]
     public void Should_return_null_when_fetch_the_car_given_a_used_ticket()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
+        ParkingLot parkingLot = new ParkingLot();
         parkingLot.Park("car1");
         parkingLot.Fetch("T-car1");
 
@@ -58,7 +58,7 @@ public class ParkingLotTest
     [Fact]
     public void Should_return_null_when_parking_lot_is_full_given_a_car()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
+        ParkingLot parkingLot = new ParkingLot();
 
         for (int i = 1; i <= 10; i++)
         {
