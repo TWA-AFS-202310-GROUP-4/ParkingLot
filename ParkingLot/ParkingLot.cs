@@ -6,6 +6,11 @@ public class ParkingLot
     private Dictionary<string, string> parkingSpace = new Dictionary<string, string>(); //ticket : car
     private int capacity = 10;
 
+    public int GetCapacity()
+    {
+        return capacity;
+    }
+
     public string Park(string inputCarPlate)
     {
         if (capacity <= 0)
