@@ -79,9 +79,8 @@ namespace ParkingLotTest
             }
 
             //When
-            string ticket = parkingLot.Park("car11");
             //Then
-            Assert.Equal(string.Empty, ticket);
+            Assert.Throws<NoPositionAvaiableException>(() => parkingLot.Park("car11"));
         }
     }
 }

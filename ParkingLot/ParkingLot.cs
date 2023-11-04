@@ -29,7 +29,7 @@ namespace Parking
         {
             if (currentCapacity >= maxCapacity)
             {
-                return string.Empty;
+                throw new NoPositionAvaiableException("No available position.");
             }
 
             currentCapacity++;
