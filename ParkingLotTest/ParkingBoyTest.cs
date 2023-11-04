@@ -4,6 +4,8 @@ namespace ParkingLotTest
 {
     using ParkingLot.Exception;
     using ParkingLotWork;
+    using System.Collections.Generic;
+
     public class ParkingBoyTest
     {
         [Fact]

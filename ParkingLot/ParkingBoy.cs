@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace ParkingLotWork.ParkingBoy
 {
@@ -19,17 +20,30 @@ namespace ParkingLotWork.ParkingBoy
 
         public string Park(string car)
         {
-            string ticket = string.Empty;
+            parkinglot.OrderBy(pa => pa.Capacity);
+            Exception exception = null;
             foreach (var lot in parkinglot)
             {
-                if (lot.Capacity < 10)
+                try
                 {
-                    ticket = parkinglot[0].Park(car);
-                    break;
+                    if (lot.Capacity < 10)
+                    {
+                        string ticket = parkinglot[0].Park(car);
+                        return ticket;
+                    }
+                }
+                catch (Exception e)
+                {
+                    exception = e;
                 }
             }
 
-            return ticket;
+            if (exception != null)
+            {
+                throw exception;
+            }
+
+            return null;
         }
 
         public string Fetch(string ticket)
