@@ -130,5 +130,26 @@ namespace ParkingLotTest
 
             Assert.Equal("No available position.", wrongTicketException.Message);
         }
+
+        [Theory]
+        [InlineData(2, 10, new string[] { "car1", "car2", "car3", "car4", "car5", "car6", "car7", "car8", "car9", "car10" })]
+        [InlineData(2, 3, new string[] { "car1", "car2", "car3", "car4" })]
+        public void Should_get_ticket_when_parkingboy_offerParking_given_multiple_parkinglots_and_the_first_is_full(int parkinglotsCount, int parkingCapacity, string[] cars)
+        {
+            //given
+
+            var parkingboy = new ParkingBoy(parkinglotsCount, parkingCapacity);
+            foreach (var car in cars)
+            {
+                parkingboy.OfferParkingService(car);
+            }
+
+            var comerCar = "comerCar";
+
+            //when
+            var ticket = parkingboy.OfferParkingService(comerCar);
+
+            Assert.Equal("comerCar-ticket", ticket);
+        }
     }
 }

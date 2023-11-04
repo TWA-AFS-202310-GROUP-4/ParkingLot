@@ -48,5 +48,15 @@ namespace ParkingLot.ParkingBase
             Capacity++;
             return res;
         }
+
+        public bool IsAvailable()
+        {
+            return Capacity > 0;
+        }
+
+        public bool IsTicketAvailable(string ticket)
+        {
+            return parkingRecord.ContainsKey(ticket);
+        }
     }
 }

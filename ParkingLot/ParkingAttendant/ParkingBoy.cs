@@ -1,24 +1,49 @@
 ﻿using ParkingLot.ParkingBase;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ParkingLot.ParkingAttendant
 {
     public class ParkingBoy
     {
-        private Parking parkinglot;
         public ParkingBoy()
         {
-            parkinglot = new Parking();
+            ParkinglotList = new List<Parking>
+            {
+                new Parking(),
+            };
         }
 
+        public ParkingBoy(int parkinglotsCount, int parkingCapacity)
+        {
+            ParkinglotList = Enumerable.Range(0, parkinglotsCount).Select(_ => new Parking(parkingCapacity)).ToList();
+        }
+
+        public List<Parking> ParkinglotList { get; set; }
         public string OfferParkingService(string car)
         {
-            return parkinglot.Park(car);
+            foreach (var parkinglot in ParkinglotList)
+            {
+                if (parkinglot.IsAvailable())
+                {
+                    return parkinglot.Park(car);
+                }
+            }
+
+            throw new WrongTicketException("No available position.");
         }
 
         public string OfferFetchingCarService(string ticket)
         {
-            return parkinglot.FectchCar(ticket);
+            foreach (var parkinglot in ParkinglotList)
+            {
+                if (parkinglot.IsAvailable())
+                {
+                    return parkinglot.FectchCar(ticket);
+                }
+            }
+
+            throw new WrongTicketException("Unrecognized parking ticket.");
         }
     }
 }
-
