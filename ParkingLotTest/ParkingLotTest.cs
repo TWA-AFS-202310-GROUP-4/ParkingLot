@@ -38,22 +38,12 @@ public class ParkingLotTest
     }
 
     [Fact]
-    public void Should_show_ticket_not_exist_when_ticket_is_wrong()
+    public void Should_return_null_when_fetch_the_car_given_a_wrong_ticket()
     {
         ParkingLot parkingLot = new ParkingLot();
         parkingLot.Park("car1");
         var myCar = parkingLot.Fetch("T-car2");
 
-        Assert.Equal("Ticket not exist", myCar);
-    }
-
-    [Fact]
-    public void Should_show_no_car_fetched_when_no_ticket_provided()
-    {
-        ParkingLot parkingLot = new ParkingLot();
-        parkingLot.Park("car1");
-        var myCar = parkingLot.Fetch(null);
-
-        Assert.Equal("No car fetched", myCar);
+        Assert.Null(myCar);
     }
 }

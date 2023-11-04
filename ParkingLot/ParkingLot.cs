@@ -21,7 +21,7 @@ public class ParkingLot
     {
         if (inputTicket == null)
         {
-            return "No car fetched";
+            return null;
         }
 
         if (parkingSpace.ContainsKey(inputTicket))
@@ -30,9 +30,7 @@ public class ParkingLot
             parkingSpace.Remove(inputTicket);
             return carPlate;
         }
-        else
-        {
-            return "Ticket not exist";
-        }
+
+        return null;
     }
 }
