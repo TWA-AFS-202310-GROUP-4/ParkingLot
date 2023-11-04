@@ -37,5 +37,10 @@ namespace Parking
             ticketCarMap.Add(ticket, carPlate);
             return ticket;
         }
+
+        public int GetCapacity()
+        {
+            return currentCapacity;
+        }
     }
 }
