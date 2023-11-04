@@ -20,7 +20,6 @@
             }
             else
             {
-                //carmessage = "wrong tickets";
                 throw new ParkingException("Unrecognized parking ticket.");
             }
 
