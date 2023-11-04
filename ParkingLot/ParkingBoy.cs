@@ -26,27 +26,20 @@ namespace ParkingLotWork.ParkingBoy
             Exception exception = null;
             foreach (var lot in parkinglots)
             {
-                Console.WriteLine(lot.Capacity);
-                try
+                if (lot.Capacity > 0)
                 {
-                    if (lot.Capacity > 0)
+                    try
                     {
-                        string ticket = lot.Park(car);
-                        return ticket;
+                        return lot.Park(car);
+                    }
+                    catch (Exception e)
+                    {
+                        exception = e;
                     }
                 }
-                catch (Exception e)
-                {
-                    exception = e;
-                }
             }
 
-            if (exception != null)
-            {
-                throw exception;
-            }
-
-            return null;
+            throw exception;
         }
 
         public string Fetch(string ticket)
@@ -65,12 +58,7 @@ namespace ParkingLotWork.ParkingBoy
                 }
            }
 
-            if (exception != null)
-            {
-                throw exception;
-            }
-
-            return string.Empty;
+            throw exception;
         }
     }
 }
