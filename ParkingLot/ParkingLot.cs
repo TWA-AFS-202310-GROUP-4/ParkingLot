@@ -15,7 +15,7 @@ public class ParkingLot
     {
         if (capacity <= 0)
         {
-            return null;
+            throw new NoAvailablePositionException();
         }
 
         var ticket = "T-" + inputCarPlate;

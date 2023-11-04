@@ -69,7 +69,6 @@ public class ParkingLotTest
             parkingLot.Park(carPlate);
         }
 
-        var ticket = parkingLot.Park("car11");
-        Assert.Null(ticket);
+        Assert.Throws<NoAvailablePositionException>(() => parkingLot.Park("car11"));
     }
 }
