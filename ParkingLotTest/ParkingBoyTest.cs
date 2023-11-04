@@ -1,15 +1,15 @@
-using Parking;
+﻿using Parking;
 using Xunit;
 
 namespace ParkingLotTest;
 
-public class ParkingLotTest
+public class ParkingBoyTest
 {
     [Fact]
     public void Should_return_a_parking_ticket_when_park_a_car_given_a_car()
     {
-        ParkingBoy parkingLot = new ParkingBoy();
-        var ticket = parkingLot.Park("car1");
+        ParkingBoy parkingBoy = new ParkingBoy();
+        var ticket = parkingBoy.Park("car1");
 
         Assert.Equal("T-car1", ticket);
     }
