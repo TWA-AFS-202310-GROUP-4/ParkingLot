@@ -8,12 +8,18 @@ namespace Parking
 {
     public class ParkingLot
     {
-        private Dictionary<string, string> parkedCarsInfo = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> parkedCarsInfo = new ();
 
         public string Fetch(string ticket)
         {
             string value;
-            return parkedCarsInfo.TryGetValue(ticket, out value) ? value : string.Empty;
+            string fetchedCar = parkedCarsInfo.TryGetValue(ticket, out value) ? value : string.Empty;
+            if (value != string.Empty)
+            {
+                parkedCarsInfo.Remove(ticket);
+            }
+
+            return fetchedCar;
         }
 
         public string Park(string carPlate)
