@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace ParkingLot.Parking
+namespace ParkingLot.ParkingBase
 {
     [Serializable]
     public class WrongTicketException : Exception

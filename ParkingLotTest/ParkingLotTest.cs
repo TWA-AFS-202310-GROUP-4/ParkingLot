@@ -1,8 +1,5 @@
-﻿using ParkingLot.Parking;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Sockets;
+﻿using ParkingLot.ParkingBase;
 using Xunit;
-using Xunit.Sdk;
 
 namespace ParkingLotTest
 {

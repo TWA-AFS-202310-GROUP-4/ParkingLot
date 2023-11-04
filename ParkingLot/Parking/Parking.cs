@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ParkingLot.Parking
+namespace ParkingLot.ParkingBase
 {
     public class Parking
     {
