@@ -14,12 +14,13 @@ namespace Parking
 
         public string Fetch(string ticket)
         {
-            string value;
-            string fetchedCar = ticketCarMap.TryGetValue(ticket, out value) ? value : string.Empty;
-            if (value != string.Empty)
+            if (!ticketCarMap.ContainsKey(ticket))
             {
-                ticketCarMap.Remove(ticket);
+                throw new WrongTicketException("Unrecognized parking ticket.");
             }
+
+            string fetchedCar = ticketCarMap[ticket];
+            ticketCarMap.Remove(ticket);
 
             return fetchedCar;
         }

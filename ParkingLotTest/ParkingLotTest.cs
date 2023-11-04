@@ -44,18 +44,16 @@ namespace ParkingLotTest
         }
 
         [Fact]
-        public void Should_get_empty_when_fetch_car_with_wrong_ticket_given_one_car()
+        public void Should_get_error_msg_when_fetch_car_with_wrong_ticket_given_one_car()
         {
             var parkingLot = new ParkingLot();
             string wrongTicket = "wrong";
 
-            string result1 = parkingLot.Fetch(wrongTicket);
-
-            Assert.Equal(string.Empty, result1);
+            Assert.Throws<WrongTicketException>(() => parkingLot.Fetch(wrongTicket));
         }
 
         [Fact]
-        public void Should_return_nothing_when_fetch_given_a_used_ticket()
+        public void Should_return_error_msg_when_fetch_given_a_used_ticket()
         {
             //Given
             var parkingLot = new ParkingLot();
@@ -64,10 +62,8 @@ namespace ParkingLotTest
             parkingLot.Fetch(ticket);
 
             //When
-            string fetchedCar = parkingLot.Fetch(ticket);
-
             //Then
-            Assert.Equal(string.Empty, fetchedCar);
+            Assert.Throws<WrongTicketException>(() => parkingLot.Fetch(ticket));
         }
 
         [Fact]
