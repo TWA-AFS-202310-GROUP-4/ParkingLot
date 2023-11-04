@@ -12,11 +12,6 @@ public class ParkingLot
 
     public string Park(string inputCarPlate)
     {
-        if (parkingSpace.ContainsKey(inputCarPlate))
-        {
-            return "duplicate car";
-        }
-
         var ticket = "T-" + inputCarPlate;
         parkingSpace.Add(ticket, inputCarPlate);
         return ticket;
