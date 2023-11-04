@@ -12,7 +12,6 @@ namespace Parking
         private ParkingLot parkingLot;
         private ParkingLot parkingLot2 = new ParkingLot();
         private int maxCapacity = 10;
-        private Dictionary<string, int> car2ParkingLot = new Dictionary<string, int>();
         public ParkingBoy(ParkingLot parkingLot)
         {
             this.parkingLot = parkingLot;
