@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 using Xunit;
+using Xunit.Sdk;
 
 namespace ParkingLotTest
 {
@@ -85,21 +86,22 @@ namespace ParkingLotTest
 
         [Theory]
         [InlineData("car1", "car2", "car3", "car4", "car5", "car6", "car7", "car8", "car9", "car10")]
+        [InlineData("car1", "car2", "car3", "car4")]
         public void Should_get_null_ticket_when_park_given_default_capacity_10_no_position(params string[] cars)
         {
             //given
-            var park = new Parking();
+            var park = new Parking(cars.Length);
             foreach (var car in cars)
             {
                 park.Park(car);
             }
 
-            var comerCar = "car11";
+            var comerCar = "no-position-car";
 
             //when
-            string ticket = park.Park(comerCar);
+            WrongTicketException wrongTicketException = Assert.Throws<WrongTicketException>(() => park.Park(comerCar));
 
-            Assert.Null(ticket);
+            Assert.Equal("No available position.", wrongTicketException.Message);
         }
     }
 }

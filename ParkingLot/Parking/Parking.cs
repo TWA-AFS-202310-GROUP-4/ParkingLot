@@ -10,13 +10,19 @@ namespace ParkingLot.Parking
             parkingRecord = new Dictionary<string, string>();
         }
 
+        public Parking(int capacity)
+        {
+            parkingRecord = new Dictionary<string, string>();
+            this.Capacity = capacity;
+        }
+
         public int Capacity { get; set; } = 10;
 
         public string Park(string car)
         {
             if (Capacity == 0)
             {
-                return null;
+                throw new WrongTicketException("No available position.");
             }
 
             Capacity--;
