@@ -15,8 +15,10 @@ namespace ParkingLot.ParkingAttendant
             return parkinglot.Park(car);
         }
 
-        public string OfferFetchingCarService(string ticket) {
+        public string OfferFetchingCarService(string ticket)
+        {
             return parkinglot.FectchCar(ticket);
         }
     }
 }
+
