@@ -6,18 +6,35 @@
     public class ParkingLot
     {
         private Dictionary<string, string> ticket2car = new Dictionary<string, string>();
+        private int capacity = 10;
         public string Fetch(string ticket)
         {
-            string carmessage = ticket2car.ContainsKey(ticket) ? ticket2car[ticket] : "wrong ticket";
-            ticket2car.Remove(ticket);
+            string carmessage = string.Empty;
+            if (ticket2car.ContainsKey(ticket))
+            {
+                carmessage = ticket2car[ticket];
+                ticket2car.Remove(ticket);
+                capacity++;
+            }
+            else
+            {
+                carmessage = "wrong tickets";
+            }
+
             return carmessage;
         }
 
         public string Park(string car)
         {
-            string ticket = "T-" + car;
-            ticket2car[ticket] = car;
-            return ticket;
+            if (capacity > 0)
+            {
+                capacity--;
+                string ticket = "T-" + car;
+                ticket2car[ticket] = car;
+                return ticket;
+            }
+
+            return "no position";
         }
     }
 }

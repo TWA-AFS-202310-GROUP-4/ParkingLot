@@ -47,5 +47,18 @@ namespace ParkingLotTest
 
             Assert.Equal("wrong ticket", car1again);
         }
+
+        [Fact]
+        public void Should_return_no_pisition_when_all_the_position_used()
+        {
+            var parkinglot = new ParkingLot();
+            string ticket = string.Empty;
+            for (int i = 11; i > 0; i--)
+            {
+                ticket = parkinglot.Park("car" + i);
+            }
+
+            Assert.Equal("no position", ticket);
+        }
     }
 }
