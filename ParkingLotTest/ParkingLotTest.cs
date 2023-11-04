@@ -74,5 +74,24 @@ namespace ParkingLotTest
             //then
             Assert.Null(retryRes);
         }
+
+        [Theory]
+        [InlineData("car1", "car2", "car3", "car4", "car5", "car6", "car7", "car8", "car9", "car10")]
+        public void Should_get_null_ticket_when_park_given_default_capacity_10_no_position(params string[] cars)
+        {
+            //given
+            var park = new Parking();
+            foreach (var car in cars)
+            {
+                park.Park(car);
+            }
+
+            var comerCar = "car11";
+
+            //when
+            string ticket = park.Park(comerCar);
+
+            Assert.Null(ticket);
+        }
     }
 }

@@ -14,8 +14,16 @@ namespace ParkingLot.Parking
             parkingRecord = new Dictionary<string, string>();
         }
 
+        public int Capacity { get; set; } = 10;
+
         public string Park(string car)
         {
+            if (Capacity == 0)
+            {
+                return null;
+            }
+
+            Capacity--;
             var ticket = car + "-ticket";
             parkingRecord.Add(ticket, car);
             return ticket;
@@ -30,6 +38,7 @@ namespace ParkingLot.Parking
 
             var res = parkingRecord[ticket];
             parkingRecord.Remove(ticket);
+            Capacity++;
             return res;
         }
     }
