@@ -12,7 +12,8 @@ namespace Parking
 
         public string Fetch(string ticket)
         {
-            return parkedCarsInfo[ticket];
+            string value;
+            return parkedCarsInfo.TryGetValue(ticket, out value) ? value : string.Empty;
         }
 
         public string Park(string carPlate)
