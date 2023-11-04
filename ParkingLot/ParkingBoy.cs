@@ -1,4 +1,5 @@
-﻿using ParkingLot.Exception;
+﻿using ParkingLot;
+using ParkingLot.Exception;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace ParkingLotWork.ParkingBoy
 {
-    public class ParkingBoy
+    public class ParkingBoy : IParkingStrategy
     {
         private List<ParkingLot> parkinglots;
         public ParkingBoy(List<ParkingLot> parkingLot)
@@ -22,24 +23,7 @@ namespace ParkingLotWork.ParkingBoy
 
         public string Park(string car)
         {
-            parkinglots = parkinglots.OrderByDescending(pa => pa.Capacity).ToList();
-            Exception exception = null;
-            foreach (var lot in parkinglots)
-            {
-                if (lot.Capacity > 0)
-                {
-                    try
-                    {
-                        return lot.Park(car);
-                    }
-                    catch (Exception e)
-                    {
-                        exception = e;
-                    }
-                }
-            }
-
-            throw exception;
+            return parkinglots.OrderByDescending(pa => pa.Capacity).FirstOrDefault().Park(car);
         }
 
         public string Fetch(string ticket)
