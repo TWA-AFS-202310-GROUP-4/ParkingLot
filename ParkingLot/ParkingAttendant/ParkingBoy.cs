@@ -20,7 +20,7 @@ namespace ParkingLot.ParkingAttendant
         }
 
         public List<Parking> ParkinglotList { get; set; }
-        public string OfferParkingService(string car)
+        public virtual string OfferParkingService(string car)
         {
             foreach (var parkinglot in ParkinglotList)
             {
