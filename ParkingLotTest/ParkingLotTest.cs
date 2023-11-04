@@ -1,6 +1,8 @@
 namespace ParkingLotTest;
 
 using Parking;
+using ParkingLot;
+using System.Net.Sockets;
 using Xunit;
 using Xunit.Sdk;
 
@@ -43,9 +45,7 @@ public class ParkingLotTest
     {
         ParkingLot parkingLot = new ParkingLot();
         parkingLot.Park("car1");
-        var myCar = parkingLot.Fetch("T-car2");
-
-        Assert.Null(myCar);
+        Assert.Throws<UnrecognizedParkingTicketException>(() => parkingLot.Fetch("T-car2"));
     }
 
     [Fact]
@@ -55,8 +55,7 @@ public class ParkingLotTest
         parkingLot.Park("car1");
         parkingLot.Fetch("T-car1");
 
-        var myCar = parkingLot.Fetch("T-car1");
-        Assert.Null(myCar);
+        Assert.Throws<UnrecognizedParkingTicketException>(() => parkingLot.Fetch("T-car1"));
     }
 
     [Fact]
