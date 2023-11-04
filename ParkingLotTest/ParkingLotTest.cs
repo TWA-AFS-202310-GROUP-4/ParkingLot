@@ -1,6 +1,7 @@
 namespace ParkingLotTest
 {
-    using ParkingLot;
+    using ParkingLot.Exception;
+    using ParkingLotWork;
     using Xunit;
 
     public class ParkingLotTest
@@ -32,9 +33,8 @@ namespace ParkingLotTest
         {
             var parkinglot = new ParkingLot();
             string ticket1 = parkinglot.Park("car1");
-            string car1 = parkinglot.Fetch(ticket1 + "2");
 
-            Assert.Equal("wrong ticket", car1);
+            Assert.Throws<ParkingException>(() => parkinglot.Fetch(ticket1 + "2"));
         }
 
         [Fact]
@@ -43,9 +43,7 @@ namespace ParkingLotTest
             var parkinglot = new ParkingLot();
             string ticket1 = parkinglot.Park("car1");
             string car1 = parkinglot.Fetch(ticket1);
-            string car1again = parkinglot.Fetch(ticket1);
-
-            Assert.Equal("wrong ticket", car1again);
+            Assert.Throws<ParkingException>(() => parkinglot.Fetch(ticket1));
         }
 
         [Fact]
@@ -53,12 +51,12 @@ namespace ParkingLotTest
         {
             var parkinglot = new ParkingLot();
             string ticket = string.Empty;
-            for (int i = 11; i > 0; i--)
+            for (int i = 10; i > 0; i--)
             {
                 ticket = parkinglot.Park("car" + i);
             }
 
-            Assert.Equal("no position", ticket);
+            Assert.Throws<ParkingException>(() => parkinglot.Park("car"));
         }
     }
 }
