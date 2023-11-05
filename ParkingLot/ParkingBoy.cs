@@ -9,17 +9,20 @@ namespace Parking
 {
     public class ParkingBoy
     {
-        private ParkingLot parkingLot;
+        private ParkingLot parkingLot = new ParkingLot();
         private ParkingLot parkingLot2 = new ParkingLot();
         private int maxCapacity = 10;
-        public ParkingBoy(ParkingLot parkingLot)
-        {
-            this.parkingLot = parkingLot;
-        }
 
-        public string Park(string car)
+        public string Park(string car, string strategy)
         {
-            return parkingLot.GetCapacity() >= maxCapacity ? parkingLot2.Park(car) : parkingLot.Park(car);
+            if (strategy.Equals("smart"))
+            {
+                var smartPark = new SmarkPark(parkingLot, parkingLot2);
+                return smartPark.Park(car);
+            }
+
+            var standardPark = new StandardPark(parkingLot, parkingLot2);
+            return standardPark.Park(car);
         }
 
         public string Fetch(string ticket)
