@@ -7,10 +7,11 @@
 
     public class ParkingLot
     {
-        private SemaphoreSlim parkingSemaphore;
+        public SemaphoreSlim parkingSemaphore;
         public Guid Id { get; set; }
-        public List<Car> ParkedCars { get; set; }
+        public List<Car> ParkedCars { get; private set; }
         public Dictionary<Guid, Ticket> TicketMap { get; set; }
+        public int EmptySlots { get; private set; }
 
         public ParkingLot(int cap = 10)
         {
@@ -18,6 +19,7 @@
             ParkedCars = new List<Car>();
             TicketMap = new Dictionary<Guid, Ticket>();
             parkingSemaphore = new SemaphoreSlim(cap, cap);
+            EmptySlots = cap;
         }
 
         public async Task<(Ticket, StatusCode)> ParkingCarAsync(Car car)
@@ -31,6 +33,7 @@
                         var ticket = new Ticket(car, this);
                         TicketMap[ticket.Id] = ticket;
                         ParkedCars.Add(car);
+                        EmptySlots--;
                         return (ticket, StatusCode.ParkingSuccess);
                     }
                 }
@@ -57,6 +60,7 @@
                         ticket.TransToUsed();
                         ParkedCars.Remove(car);
                         parkingSemaphore.Release();
+                        EmptySlots++;
                         return (car, StatusCode.FetchSuccess);
                     }
                 }

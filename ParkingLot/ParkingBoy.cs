@@ -3,26 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace ParkingLot
 {
     public class ParkingBoy
     {
-        public ParkingLot ParkingLot { get; set; }
+        public List<ParkingLot> ParkingLots { get; set; }
         // choosenParkingLot
-        public ParkingBoy(ParkingLot parkinglot)
+        public ParkingBoy(List<ParkingLot> parkinglots)
         {
-            ParkingLot = parkinglot;
+            ParkingLots = parkinglots;
         }
 
-        public async Task<(Ticket, StatusCode)> ParkAsync(Car car)
+        public virtual async Task<(Ticket, StatusCode)> ParkAsync(Car car)
         {
-            return await ParkingLot?.ParkingCarAsync(car);
+            foreach (var parkingLot in ParkingLots)
+            {
+                (Ticket ticket, StatusCode statuscode) = await parkingLot.ParkingCarAsync(car);
+                if (statuscode == StatusCode.ParkingSuccess)
+                {
+                    return (ticket, statuscode);
+                }
+            }
+
+            return (null, StatusCode.ParkingFailed);
         }
 
-        public async Task<(Car, StatusCode)> FetchAsync(Ticket ticket)
+        public virtual async Task<(Car, StatusCode)> FetchAsync(Ticket ticket)
         {
-            return await ParkingLot?.FetchCarAsync(ticket);
+            foreach (var parkingLot in ParkingLots)
+            {
+                (Car car, StatusCode statuscode) = await parkingLot.FetchCarAsync(ticket);
+                if (statuscode == StatusCode.FetchSuccess)
+                {
+                    return (car, statuscode);
+                }
+            }
+
+            return (null, StatusCode.FetchFailed);
         }
     }
 }

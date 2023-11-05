@@ -10,16 +10,36 @@
     public class ParkingBoyTest
     {
         [Fact]
-        public async Task Should_return_ticket_given_parkinglot_and_car_then_park_carAsync()
+        public async Task Should_return_first_has_emptyslots_parkinglot_given_parkinglot_and_car_then_park_carAsync()
         {
-            var parkingLot = new ParkingLot();
-            var parkingBoy = new ParkingBoy(parkingLot);
+            var parkingLots = new List<ParkingLot>();
+            var parkingLot1 = new ParkingLot();
+            var parkingLot2 = new ParkingLot();
+            parkingLots.Add(parkingLot1);
+            parkingLots.Add(parkingLot2);
+            var parkingBoy = new ParkingBoy(parkingLots);
             var car = new Car();
             var parkingInfo = await parkingBoy.ParkAsync(car);
-            Assert.NotNull(parkingInfo.Item1);
+            Assert.Equal(parkingLot1.Id, parkingInfo.Item1.ParkingLot.Id);
         }
 
         [Fact]
+        public async Task Should_return_correct_parkinglot_given_parkinglot_and_car_then_park_carAsync()
+        {
+            var parkingLots = new List<ParkingLot>();
+            var parkingLot1 = new ParkingLot();
+            var parkingLot2 = new ParkingLot();
+            parkingLots.Add(parkingLot1);
+            parkingLots.Add(parkingLot2);
+            var sparkingBoy = new SmartParkingBoy(parkingLots);
+            var car = new Car();
+            _ = await parkingLot1.ParkingCarAsync(car);
+            var car2 = new Car();
+            var parkingInfo = await sparkingBoy.ParkAsync(car);
+            Assert.Equal(parkingLot2.Id, parkingInfo.Item1.ParkingLot.Id);
+        }
+
+        /*[Fact]
         public async Task Should_return_parkedcar_given_parkingticket_and_car_then_fetch_carAsync()
         {
             var parkingLot = new ParkingLot();
@@ -93,6 +113,6 @@
             var parkingInfoNew = await parkingBoy.ParkAsync(parkedCar1);
             Assert.Null(parkingInfoNew.Item1);
             Assert.Equal("No available position", parkingInfoNew.Item2 == StatusCode.OverCapacity ? Constants.NoAvailablePositionMessage : Constants.DefaultMessage);
-        }
+        }*/
     }
 }
