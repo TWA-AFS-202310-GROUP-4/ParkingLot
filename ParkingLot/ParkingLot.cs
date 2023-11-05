@@ -7,7 +7,7 @@
 
     public class ParkingLot
     {
-        public SemaphoreSlim parkingSemaphore;
+        private SemaphoreSlim parkingSemaphore;
         public Guid Id { get; set; }
         public List<Car> ParkedCars { get; private set; }
         public Dictionary<Guid, Ticket> TicketMap { get; set; }

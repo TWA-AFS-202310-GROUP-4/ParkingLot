@@ -35,7 +35,7 @@
             var car = new Car();
             _ = await parkingLot1.ParkingCarAsync(car);
             var car2 = new Car();
-            var parkingInfo = await sparkingBoy.ParkAsync(car);
+            var parkingInfo = await sparkingBoy.ParkAsync(car2);
             Assert.Equal(parkingLot2.Id, parkingInfo.Item1.ParkingLot.Id);
         }
 
