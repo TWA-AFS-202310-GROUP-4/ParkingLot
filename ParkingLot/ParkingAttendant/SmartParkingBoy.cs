@@ -1,6 +1,4 @@
-﻿using ParkingLot.ParkingAttendant.ParkingStrategy;
-using ParkingLot.ParkingAttendant.ParkingStrategy.Impl;
-using System.Linq;
+﻿using ParkingLot.ParkingAttendant.ParkingStrategy.Impl;
 
 namespace ParkingLot.ParkingAttendant
 {
