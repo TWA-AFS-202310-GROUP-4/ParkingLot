@@ -14,9 +14,8 @@ namespace ParkingLotTest
         {
             var parkingLot = new ParkingLot();
             var car = new Car();
-            var ticket = await parkingLot.ParkingCarAsync(car);
-            Console.Write(ticket.Id);
-            Assert.NotNull(ticket);
+            var parkingInfo = await parkingLot.ParkingCarAsync(car);
+            Assert.NotNull(parkingInfo.Item1);
         }
 
         [Fact]
@@ -24,8 +23,9 @@ namespace ParkingLotTest
         {
             var parkingLot = new ParkingLot();
             var parkedCar = new Car();
-            var ticket = await parkingLot.ParkingCarAsync(parkedCar);
-            Assert.Equal(parkedCar, await parkingLot.FetchCarAsync(ticket));
+            var parkingInfo = await parkingLot.ParkingCarAsync(parkedCar);
+            var fetchedInfo = await parkingLot.FetchCarAsync(parkingInfo.Item1);
+            Assert.Equal(parkedCar, fetchedInfo.Item1);
         }
 
         [Fact]
@@ -34,19 +34,26 @@ namespace ParkingLotTest
             var parkingLot = new ParkingLot();
             var parkedCar1 = new Car();
             var parkedCar2 = new Car();
-            var ticket1 = await parkingLot.ParkingCarAsync(parkedCar1);
-            var ticket2 = await parkingLot.ParkingCarAsync(parkedCar2);
-            Assert.Equal(parkedCar1, await parkingLot.FetchCarAsync(ticket1));
-            Assert.Equal(parkedCar2, await parkingLot.FetchCarAsync(ticket2));
+            var parkingInfo1 = await parkingLot.ParkingCarAsync(parkedCar1);
+            var parkingInfo2 = await parkingLot.ParkingCarAsync(parkedCar2);
+            Assert.Equal(parkedCar1, (await parkingLot.FetchCarAsync(parkingInfo1.Item1)).Item1);
+            Assert.Equal(parkedCar2, (await parkingLot.FetchCarAsync(parkingInfo2.Item1)).Item1);
         }
 
         [Fact]
         public async Task Should_return_null_given_wrong_parkingticket_then_fetch_carAsync()
         {
             var parkingLot = new ParkingLot();
-            var parkedCar1 = new Car();
             var wrongTicket = new Ticket(new Car(), new ParkingLot());
-            Assert.Null(await parkingLot.FetchCarAsync(wrongTicket));
+            var fetchedInfo = await parkingLot.FetchCarAsync(wrongTicket);
+            Assert.Null(fetchedInfo.Item1);
+            var message = string.Empty;
+            if (fetchedInfo.Item2 == StatusCode.FetchFailed)
+            {
+                message = Constants.UnrecognizedTicketMessage;
+            }
+
+            Assert.Equal("Unrecognized parking ticket", message);
         }
 
         [Fact]
@@ -54,9 +61,11 @@ namespace ParkingLotTest
         {
             var parkingLot = new ParkingLot();
             var parkedCar = new Car();
-            var ticket = await parkingLot.ParkingCarAsync(parkedCar);
-            var fetchCar = await parkingLot.FetchCarAsync(ticket);
-            Assert.Null(await parkingLot.FetchCarAsync(ticket));
+            var parkingInfo = await parkingLot.ParkingCarAsync(parkedCar);
+            _ = await parkingLot.FetchCarAsync(parkingInfo.Item1);
+            var fetchedAgain = await parkingLot.FetchCarAsync(parkingInfo.Item1);
+            Assert.Null(fetchedAgain.Item1);
+            Assert.Equal("Unrecognized parking ticket", fetchedAgain.Item2 == StatusCode.FetchFailed ? Constants.UnrecognizedTicketMessage : Constants.DefaultMessage);
         }
 
         [Fact]
@@ -81,7 +90,9 @@ namespace ParkingLotTest
             }
 
             var parkedCar1 = new Car();
-            Assert.Null(await parkingLot.ParkingCarAsync(parkedCar1));
+            var parkingInfoNew = await parkingLot.ParkingCarAsync(parkedCar1);
+            Assert.Null(parkingInfoNew.Item1);
+            Assert.Equal("No available position", parkingInfoNew.Item2 == StatusCode.OverCapacity ? Constants.NoAvailablePositionMessage : Constants.DefaultMessage);
         }
     }
 }

@@ -10,44 +10,46 @@
         private SemaphoreSlim parkingSemaphore;
         public Guid Id { get; set; }
         public List<Car> ParkedCars { get; set; }
-        public Dictionary<Guid, Ticket> Tickets { get; set; }
+        public Dictionary<Guid, Ticket> TicketMap { get; set; }
 
         public ParkingLot(int cap = 10)
         {
             Id = Guid.NewGuid();
             ParkedCars = new List<Car>();
-            Tickets = new Dictionary<Guid, Ticket>();
+            TicketMap = new Dictionary<Guid, Ticket>();
             parkingSemaphore = new SemaphoreSlim(cap, cap);
         }
 
-        public async Task<Ticket> ParkingCarAsync(Car car)
+        public async Task<(Ticket, StatusCode)> ParkingCarAsync(Car car)
         {
             try
             {
                 if (await parkingSemaphore.WaitAsync(0))
                 {
-                    lock (ParkedCars)
+                    lock (TicketMap)
                     {
                         var ticket = new Ticket(car, this);
-                        Tickets[ticket.Id] = ticket;
+                        TicketMap[ticket.Id] = ticket;
                         ParkedCars.Add(car);
-                        return ticket;
+                        return (ticket, StatusCode.ParkingSuccess);
                     }
                 }
-
-                return null;
+                else
+                {
+                    return (null, StatusCode.OverCapacity);
+                }
             }
             catch (Exception)
             {
-                return null;
+                return (null, StatusCode.ParkingFailed);
             }
         }
 
-        public async Task<Car> FetchCarAsync(Ticket ticket)
+        public async Task<(Car, StatusCode)> FetchCarAsync(Ticket ticket)
         {
-            lock (ParkedCars)
+            lock (TicketMap)
             {
-                if (ticket != null && Tickets.ContainsKey(ticket.Id) && !ticket.IsUsed)
+                if (ticket != null && TicketMap.ContainsKey(ticket.Id) && !ticket.IsUsed)
                 {
                     var car = ticket.Car;
                     if (car != null && ParkedCars.Contains(car))
@@ -55,11 +57,11 @@
                         ticket.TransToUsed();
                         ParkedCars.Remove(car);
                         parkingSemaphore.Release();
-                        return car;
+                        return (car, StatusCode.FetchSuccess);
                     }
                 }
 
-                return null;
+                return (null, StatusCode.FetchFailed);
             }
         }
     }
