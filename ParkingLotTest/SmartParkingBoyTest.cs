@@ -11,7 +11,7 @@ namespace ParkingLotTest
         [Theory]
         [InlineData(2, 3, "car1", "car1-ticket")]
         [InlineData(1, 10, "car2", "car2-ticket")]
-        public void ShouldGetTheTicketWhenSmartParkingboyOfferParkingServiceGivenACarToParkingLots(int parkinglotsCount, int parkingCapacity, string car, string expectedTicket)
+        public void Should_get_the_ticket_when_smartParkingboy_offerParkingService_given_a_car_to_ParkingLots(int parkinglotsCount, int parkingCapacity, string car, string expectedTicket)
         {
             //given9
             var smartParkingboy = new SmartParkingBoy(parkinglotsCount, parkingCapacity);
