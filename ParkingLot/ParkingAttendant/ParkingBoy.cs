@@ -1,4 +1,6 @@
-﻿using ParkingLot.ParkingBase;
+﻿using ParkingLot.ParkingAttendant.ParkingStrategy;
+using ParkingLot.ParkingAttendant.ParkingStrategy.Impl;
+using ParkingLot.ParkingBase;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +10,7 @@ namespace ParkingLot.ParkingAttendant
     {
         public ParkingBoy()
         {
+            ParkingStrategy = new ParkingBoyStrategy();
             ParkinglotList = new List<Parking>
             {
                 new Parking(),
@@ -16,21 +19,17 @@ namespace ParkingLot.ParkingAttendant
 
         public ParkingBoy(int parkinglotsCount, int parkingCapacity)
         {
+            ParkingStrategy = new ParkingBoyStrategy();
             ParkinglotList = Enumerable.Range(0, parkinglotsCount).Select(_ => new Parking(parkingCapacity)).ToList();
         }
 
+        public IParkingStrategy ParkingStrategy { get; set; }
+
         public List<Parking> ParkinglotList { get; set; }
+
         public virtual string OfferParkingService(string car)
         {
-            foreach (var parkinglot in ParkinglotList)
-            {
-                if (parkinglot.IsAvailable())
-                {
-                    return parkinglot.Park(car);
-                }
-            }
-
-            throw new WrongTicketException("No available position.");
+            return ParkingStrategy.ParkingCar(car, ParkinglotList);
         }
 
         public string OfferFetchingCarService(string ticket)

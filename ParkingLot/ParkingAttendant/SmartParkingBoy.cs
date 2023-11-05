@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using ParkingLot.ParkingAttendant.ParkingStrategy;
+using ParkingLot.ParkingAttendant.ParkingStrategy.Impl;
+using System.Linq;
 
 namespace ParkingLot.ParkingAttendant
 {
@@ -6,12 +8,12 @@ namespace ParkingLot.ParkingAttendant
     {
         public SmartParkingBoy(int parkinglotsCount, int parkingCapacity) : base(parkinglotsCount, parkingCapacity)
         {
+            ParkingStrategy = new SmartParkingBoyStrategy();
         }
 
         public override string OfferParkingService(string car)
         {
-            int maxIndex = ParkinglotList.Select((parkinglot, index) => new { Index = index, Value = parkinglot.Capacity }).OrderByDescending(item => item.Value).First().Index;
-            return ParkinglotList[maxIndex].Park(car);
+            return ParkingStrategy.ParkingCar(car, ParkinglotList);
         }
     }
 }
