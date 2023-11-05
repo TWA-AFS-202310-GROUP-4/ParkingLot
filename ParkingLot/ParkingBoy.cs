@@ -4,27 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using static ParkingLot.StrategyRegister;
 
 namespace ParkingLot
 {
     public class ParkingBoy
     {
+        private SelectParkingLotDelegate selectParkingLotDelegate;
         public List<ParkingLot> ParkingLots { get; set; }
-        // choosenParkingLot
-        public ParkingBoy(List<ParkingLot> parkinglots)
+
+        public ParkingBoy(List<ParkingLot> parkinglots, SelectParkingLotDelegate selectParkingLotDelegate)
         {
             ParkingLots = parkinglots;
+            this.selectParkingLotDelegate = selectParkingLotDelegate;
         }
 
         public virtual async Task<(Ticket, StatusCode)> ParkAsync(Car car)
         {
-            foreach (var parkingLot in ParkingLots)
+            var parkingLot = selectParkingLotDelegate(ParkingLots);
+            if (parkingLot != null)
             {
-                (Ticket ticket, StatusCode statuscode) = await parkingLot.ParkingCarAsync(car);
-                if (statuscode == StatusCode.ParkingSuccess)
-                {
-                    return (ticket, statuscode);
-                }
+                return await parkingLot.ParkingCarAsync(car);
             }
 
             return (null, StatusCode.ParkingFailed);

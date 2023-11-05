@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ParkingLot.StrategyRegister;
 
 namespace ParkingLot
 {
     public class SmartParkingBoy : ParkingBoy
     {
-        public SmartParkingBoy(List<ParkingLot> parkinglots) : base(parkinglots)
+        public SmartParkingBoy(List<ParkingLot> parkinglots, SelectParkingLotDelegate selectParkingLotDelegate) : base(parkinglots, selectParkingLotDelegate)
         {
         }
 
-        public override async Task<(Ticket, StatusCode)> ParkAsync(Car car)
+        /*public override async Task<(Ticket, StatusCode)> ParkAsync(Car car)
         {
             var filterPakingLot = ParkingLots.Where(parkingLot => parkingLot.EmptySlots > 0).ToList();
             var selectedParkingLot = filterPakingLot.Any() ? filterPakingLot.OrderByDescending(parkingLot => parkingLot.EmptySlots).First() : null;
@@ -36,6 +37,6 @@ namespace ParkingLot
             }
 
             return (null, StatusCode.FetchFailed);
-        }
+        }*/
     }
 }

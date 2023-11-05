@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using ParkingLot;
     using Xunit;
+    using static ParkingLot.StrategyRegister;
 
     public class ParkingBoyTest
     {
@@ -17,7 +18,7 @@
             var parkingLot2 = new ParkingLot();
             parkingLots.Add(parkingLot1);
             parkingLots.Add(parkingLot2);
-            var parkingBoy = new ParkingBoy(parkingLots);
+            var parkingBoy = new ParkingBoy(parkingLots, SelectParkingLotStandard);
             var car = new Car();
             var parkingInfo = await parkingBoy.ParkAsync(car);
             Assert.Equal(parkingLot1.Id, parkingInfo.Item1.ParkingLot.Id);
@@ -31,7 +32,7 @@
             var parkingLot2 = new ParkingLot();
             parkingLots.Add(parkingLot1);
             parkingLots.Add(parkingLot2);
-            var sparkingBoy = new SmartParkingBoy(parkingLots);
+            var sparkingBoy = new SmartParkingBoy(parkingLots, SelectParkingLotSmart);
             var car = new Car();
             _ = await parkingLot1.ParkingCarAsync(car);
             var car2 = new Car();
