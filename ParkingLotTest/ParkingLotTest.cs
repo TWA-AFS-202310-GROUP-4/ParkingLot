@@ -38,7 +38,7 @@ public class ParkingLotTest
     }
 
     [Fact]
-    public void Should_return_null_when_fetch_the_car_given_a_wrong_ticket()
+    public void Should_throw_UnrecognizedParkingTicketException_when_fetch_the_car_given_a_wrong_ticket()
     {
         ParkingLot parkingLot = new ParkingLot();
         parkingLot.Park("car1");
@@ -46,7 +46,7 @@ public class ParkingLotTest
     }
 
     [Fact]
-    public void Should_return_null_when_fetch_the_car_given_a_used_ticket()
+    public void Should_throw_UnrecognizedParkingTicketException_when_fetch_the_car_given_a_used_ticket()
     {
         ParkingLot parkingLot = new ParkingLot();
         parkingLot.Park("car1");
@@ -56,7 +56,7 @@ public class ParkingLotTest
     }
 
     [Fact]
-    public void Should_return_null_when_parking_lot_is_full_given_a_car()
+    public void Should_throw_NoAvailablePositionException_when_parking_lot_is_full_given_a_car()
     {
         ParkingLot parkingLot = new ParkingLot();
 

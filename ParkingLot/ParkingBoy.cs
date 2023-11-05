@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Parking;
 
@@ -7,14 +8,20 @@ public class ParkingBoy
     private ParkingLot parkingLot1 = new ParkingLot();
     private ParkingLot parkingLot2 = new ParkingLot();
 
-    public string Park(string inputCarPlate)
+    public string Park(string inputCarPlate, string parkingStrategy)
     {
-        if (parkingLot1.GetCapacity() > 0)
+        if (parkingStrategy.Equals("standard"))
         {
-            return parkingLot1.Park(inputCarPlate);
+            var standardParking = new StandardParking();
+            return standardParking.Park(inputCarPlate, parkingLot1, parkingLot2);
+        }
+        else if (parkingStrategy.Equals("smart"))
+        {
+            var smartParking = new SmartParking();
+            return smartParking.Park(inputCarPlate, parkingLot1 , parkingLot2);
         }
 
-        return parkingLot2.Park(inputCarPlate);
+        return null;
     }
 
     public string Fetch(string inputTicket)

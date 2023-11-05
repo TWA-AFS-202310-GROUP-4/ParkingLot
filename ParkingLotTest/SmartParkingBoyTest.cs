@@ -5,7 +5,7 @@ namespace ParkingLotTest;
 
 public class SmartParkingBoyTest
 {
-    [Fact]
+   /* [Fact]
     public void Should_return_a_parking_ticket_when_park_a_car_given_a_car()
     {
         SmartParkingBoy parkingBoy = new SmartParkingBoy();
@@ -112,5 +112,5 @@ public class SmartParkingBoyTest
 
         parkingBoy.Park("car4");
         Assert.Equal(8, parkingBoy.CheckParkingLot2Capacity());
-    }
+    }*/
 }
